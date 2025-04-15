@@ -1,0 +1,101 @@
+'''app de portaria pra entrega 
+
+Explicação :
+
+O programa é o seguinte : assim que o entregador chegar ao local , ele ira fazer o cadastro com :
+nome 
+nome da empresa 
+telefone / e-mail 
+
+assim que fizer o cadastro ele ira informar pra quem ele quer entregar 
+, lugar , empresa.... :
+
+nome da pessoa / empresa (que ira receber o produto)
+andar
+numero do conjunto ou sala 
+o que será entregue
+tamanho do pacote (p: pequeno / m: médio / g: grande )
+
+após ele selecionar , ira abrir a gaveta com o numero do tamanho
+escolhido, ele vai colocar o produto dentro da gaveta , fechar a gaveta e finalizar a entrega no app da portaria , após isso o sistema deve ,mandar uma mensagem via sms ou e-mail informando que foi entregue e por quem foi entregue 
+
+====================================================================
+OBS: fazer a parte de cadastro do morador ou pessoa que trabalha no prédio 
+fazer a opção de retirada do produto 
+deixar o nome e clicar em finalizar '''
+
+
+import json
+import os
+
+
+print ("Seja bem vindo ao app de recebimento de entrega !!")
+#cadastro do entregador e residente 
+cadastro= input('Voce é entregador ou residente o prédio? ')
+if cadastro == "entregador":
+    cadastro_p1= input('essa é sua primeira vez aqui ??(responda com sim ou não)')
+    caminho_arquivo = 'usuario.json'
+    if cadastro_p1 == "sim" :
+        nome= input('qual seu nome completo? ')
+        empresa= input('para qual empresa voce trabalha?? ')
+        tel_mail= input('informe seu telefone ou e-mail ')
+
+        dados= {
+            "nome": nome,
+            "empresa":empresa,
+            "contato": tel_mail
+        }
+        #salvar no arquivo
+        with open(caminho_arquivo, "w") as arquivo:
+            json.dump(dados, arquivo)
+        print(f"Cadastro realizado, Parabéns {nome}! Seus dados foram salvos .")
+
+    elif cadastro_p1 == 'não':
+        input("informe seu nome completo: ")
+        if os.path.exists(caminho_arquivo):
+            with open(caminho_arquivo, "r") as arquivo:
+                dados= json.load(arquivo)
+
+            print(f"Bem-vindo de volta, {dados['nome']}! ")
+            print(f"Empresa: {dados['empresa']}")
+            print(f"Contato: {dados['contato']}")
+
+    else:
+        print("Hmm... não encontrei seu cadastro ")
+        print("Tenta responder 'sim' pra gente te cadastrar.")
+
+elif cadastro== "residente":
+    cadastro_p2 = input('Essa é sua primeira vez aqui ??(responda com sim ou não)').strip().lower()
+    
+    nome= input('Qual seu nome completo? ')
+    nome_arquivo= nome.lower().replace(" ", "_")+ ".json"
+    caminho_arquivo2= nome_arquivo
+
+    if cadastro_p2 == "sim":
+        andar= input('Qual andar você reside ')
+        codigo= input('Informe seu código de entrega ')
+
+        dados_residente= {
+             "nome": nome,
+            "andar":andar,
+            "codigo": codigo
+        }
+        with open(caminho_arquivo2, "w") as arquivo2:
+            json.dump(dados_residente, arquivo2)
+
+        print(f"Cadastro realizado, Parabéns {nome}! Seus dados foram salvos .")
+
+#quem recebera a entrega
+print('Para quem sera feito a entrega?')
+destinatario= input("Qual o nome completo de quem ira receber : ").strip()
+arquivo_destinatario = destinatario.lower().replace(" ", "_")+ ".json"
+
+if os.path.exists(arquivo_destinatario):
+    with open(arquivo_destinatario, "r") as arquivo2:
+        dados_residente= json.load(arquivo2)
+
+    print(f"Esse é o nome do residente : {dados_residente['nome']}! ")
+    print(f"Esse é o código de entrega: {dados_residente['codigo']}! ") 
+else:
+    print("Não encontrei o cadastro desse residente.")
+    print("Verifique se o nome está correto ou peça para o morador se cadastrar.")
