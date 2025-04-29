@@ -28,64 +28,89 @@ deixar o nome e clicar em finalizar '''
 import json
 import os
 
+#1 feito
+while True:
+    print ("Seja bem vindo ao app de recebimento de entrega !!")
+    #cadastro do entregador e residente 
+    cadastro= input('Voce é entregador ou residente o prédio? ')
+    if cadastro == "entregador":
+        cadastro_p1= input('essa é sua primeira vez aqui ??(responda com sim ou não)')
+        caminho_arquivo = 'usuario.json'
+        if cadastro_p1 == "sim" :
+            nome= input('qual seu nome completo? ')
+            empresa= input('para qual empresa voce trabalha?? ')
+            tel_mail= input('informe seu telefone ou e-mail ')
 
-print ("Seja bem vindo ao app de recebimento de entrega !!")
-#cadastro do entregador e residente 
-cadastro= input('Voce é entregador ou residente o prédio? ')
-if cadastro == "entregador":
-    cadastro_p1= input('essa é sua primeira vez aqui ??(responda com sim ou não)')
-    caminho_arquivo = 'usuario.json'
-    if cadastro_p1 == "sim" :
-        nome= input('qual seu nome completo? ')
-        empresa= input('para qual empresa voce trabalha?? ')
-        tel_mail= input('informe seu telefone ou e-mail ')
+            dados= {
+                "nome": nome,
+                "empresa":empresa,
+                "contato": tel_mail
+            }
+            #salvar no arquivo
+            with open(caminho_arquivo, "w") as arquivo:
+                json.dump(dados, arquivo)
+            print(f"Cadastro realizado, Parabéns {nome}! Seus dados foram salvos .")
 
-        dados= {
-            "nome": nome,
-            "empresa":empresa,
-            "contato": tel_mail
-        }
-        #salvar no arquivo
-        with open(caminho_arquivo, "w") as arquivo:
-            json.dump(dados, arquivo)
-        print(f"Cadastro realizado, Parabéns {nome}! Seus dados foram salvos .")
+        elif cadastro_p1 == 'não':
+            input("informe seu nome completo: ")
+            if os.path.exists(caminho_arquivo):
+                with open(caminho_arquivo, "r") as arquivo:
+                    dados= json.load(arquivo)
 
-    elif cadastro_p1 == 'não':
-        input("informe seu nome completo: ")
-        if os.path.exists(caminho_arquivo):
-            with open(caminho_arquivo, "r") as arquivo:
-                dados= json.load(arquivo)
+                print(f"Bem-vindo de volta, {dados['nome']}! ")
+                print(f"Empresa: {dados['empresa']}")
+                print(f"Contato: {dados['contato']}")
+            else:
+                print("⚠️ Cadastro não encontrado. Vamos fazer seu cadastro agora!")
+                continue
+        else :
+            print("⚠️ Resposta inválida. Tente novamente.")
+            continue     
 
-            print(f"Bem-vindo de volta, {dados['nome']}! ")
-            print(f"Empresa: {dados['empresa']}")
-            print(f"Contato: {dados['contato']}")
+    #2 feito
+    elif cadastro== "residente":
+        cadastro_p2 = input('Essa é sua primeira vez aqui ??(responda com sim ou não)').strip().lower()
+        
+        nome= input('Qual seu nome completo? ')
+        nome_arquivo= nome.lower().replace(" ", "_")+ ".json"
+        caminho_arquivo2= nome_arquivo
 
+        if cadastro_p2 == "sim":
+            andar= input('Qual andar você reside ')
+            codigo= input('Informe seu código de entrega ')
+
+            dados_residente= {
+                "nome": nome,
+                "andar":andar,
+                "codigo": codigo
+            }
+            with open(caminho_arquivo2, "w") as arquivo2:
+                json.dump(dados_residente, arquivo2)
+
+            print(f"Cadastro realizado, Parabéns {nome}! Seus dados foram salvos .")
+
+        elif cadastro_p2== "não":
+            input("informe seu nome completo: ")
+            if os.path.exists(caminho_arquivo2):
+                with open(caminho_arquivo2, "r") as arquivo2:
+                    dados_residente= json.load(arquivo2)
+                
+                print(f'Ola {dados_residente['nome']} seja Bem vindo de volta')
+                print(f'seu andar {dados_residente['andar']}')
+                print(f'seu codigo é {dados_residente['codigo']}')
+            else:
+                print("⚠️ Cadastro não encontrado. Vamos fazer seu cadastro agora!")
+                continue   
+        else:
+            print("⚠️ Resposta inválida. Tente novamente.")
+            continue  # Volta pro começo
     else:
-        print("Hmm... não encontrei seu cadastro ")
-        print("Tenta responder 'sim' pra gente te cadastrar.")
+        print("⚠️ Tipo de usuário inválido. Tente novamente.")
+        continue  # Volta pro começo        
+    break
 
-elif cadastro== "residente":
-    cadastro_p2 = input('Essa é sua primeira vez aqui ??(responda com sim ou não)').strip().lower()
-    
-    nome= input('Qual seu nome completo? ')
-    nome_arquivo= nome.lower().replace(" ", "_")+ ".json"
-    caminho_arquivo2= nome_arquivo
 
-    if cadastro_p2 == "sim":
-        andar= input('Qual andar você reside ')
-        codigo= input('Informe seu código de entrega ')
-
-        dados_residente= {
-             "nome": nome,
-            "andar":andar,
-            "codigo": codigo
-        }
-        with open(caminho_arquivo2, "w") as arquivo2:
-            json.dump(dados_residente, arquivo2)
-
-        print(f"Cadastro realizado, Parabéns {nome}! Seus dados foram salvos .")
-
-#quem recebera a entrega
+#3 feito
 print('Para quem sera feito a entrega?')
 destinatario= input("Qual o nome completo de quem ira receber : ").strip()
 arquivo_destinatario = destinatario.lower().replace(" ", "_")+ ".json"
@@ -99,3 +124,39 @@ if os.path.exists(arquivo_destinatario):
 else:
     print("Não encontrei o cadastro desse residente.")
     print("Verifique se o nome está correto ou peça para o morador se cadastrar.")
+
+#4 o que ser aentregue 
+gaveta = input('o que sera entregue? envelope / pacote ou alimento ? : ')
+if gaveta== "envelope":
+    print("escolha uma das opções")
+    tamanho_gaveta= input('Qual o tamanho do pacote ? Pequeno , Medio ou Grande? : ' )
+    if tamanho_gaveta== "pequeno":
+        print("Coloque nas gavetas 1,2,3 ou 4 ")
+    elif tamanho_gaveta== "Medio":
+        print("coloque nas gavetas 5,6,7 ou 8 ")
+    else :
+        print("Coloque nas gavetas 9,10,11 ou 12")
+elif gaveta== "pacote":
+    print("escolha uma das opções")
+    tamanho_gaveta= input('Qual o tamanho do pacote ? Pequeno , Medio ou Grande? : ' )
+    if tamanho_gaveta== "pequeno":
+        print("Coloque nas gavetas 1,2,3 ou 4 ")
+    elif tamanho_gaveta== "Medio":
+        print("coloque nas gavetas 5,6,7 ou 8 ")
+    else :
+        print("Coloque nas gavetas 9,10,11 ou 12")
+else:
+    print("escolha uma das opções")
+    tamanho_gaveta= input('Qual o tamanho do pacote ? Pequeno , Medio ou Grande? : ' )
+    if tamanho_gaveta== "pequeno":
+        print("Coloque na gaveta térmica 13 ")
+    elif tamanho_gaveta== "Medio":
+        print("Coloque na gaveta térmica 14 ")
+    else :
+        print("Coloque na gaveta térmica 15")
+    
+print('logo sera enviado uma msg via sms ou e-mail informando que foi entregue o pedido')
+
+#ATUALIZADO
+
+
