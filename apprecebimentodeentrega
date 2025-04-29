@@ -157,6 +157,6 @@ else:
     
 print('logo sera enviado uma msg via sms ou e-mail informando que foi entregue o pedido')
 
-#ATUALIZADO
+#atualizado 28/04/25
 
 
