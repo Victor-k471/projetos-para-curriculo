@@ -1,0 +1,75 @@
+import customtkinter 
+
+
+
+def janela2_entrega ():
+    janela2= customtkinter.CTkToplevel()
+    janela2.geometry("600x600")
+    janela2.title("entrega")
+
+    janela2.lift()
+    janela2.attributes('-topmost', True)
+    janela2.after(100, lambda:
+                  janela2.attributes('-topmost', False))
+    
+    texto_residente= customtkinter.CTkLabel (janela2, text="Quem vai receber?", font=("Arial", 18) )
+    texto_residente.pack(padx= 10, pady= 10)
+
+    nome_residente= customtkinter.CTkEntry(janela2, placeholder_text="qual o nome do residente")
+    nome_residente.pack(padx= 10, pady=10)
+
+    andar_residente= customtkinter.CTkEntry(janela2, placeholder_text="qual o andar do residente")
+    andar_residente.pack(padx= 10, pady=10)
+    
+
+def janela3_cadastro ():
+    janela3= customtkinter.CTkToplevel()
+    janela3.geometry("600x600")
+    janela3.title("Cadastro")
+
+    janela3.lift()
+    janela3.attributes('-topmost', True)
+    janela3.after(100, lambda:
+                  janela3.attributes('-topmost', False))
+
+    texto_cadastro1= customtkinter.CTkLabel(janela3, text="Informe seus dados para cadastro", font=("Arial", 20) )
+    texto_cadastro1.pack(padx=10, pady=10)
+
+    nome_cadastro= customtkinter.CTkEntry (janela3, placeholder_text="informe seu nome")
+    nome_cadastro.pack(padx= 10, pady= 10)
+    telefone_cadastro= customtkinter.CTkEntry (janela3, placeholder_text="informe seu telefone")
+    telefone_cadastro.pack(padx= 10, pady= 10)
+    empresa_cadastro= customtkinter.CTkEntry (janela3, placeholder_text="informe seu empresa")
+    empresa_cadastro.pack(padx= 10, pady= 10)
+
+    botao_criar_cadastro= customtkinter.CTkButton (janela3, text="Criar Cadastro")
+    botao_criar_cadastro.pack(padx=10, pady=10)
+    boato_voltar= customtkinter.CTkButton (janela3, text="voltar", command=janela3.destroy)
+    boato_voltar.pack(padx=10, pady=10)
+
+
+
+
+
+janela_principal= customtkinter.CTk()
+janela_principal.title("INICIO")
+janela_principal.geometry("600x600")
+
+texto_inicio1= customtkinter.CTkLabel(janela_principal, text= "Seja bem vindo ao app de entrega",
+font=("underline", 20, "bold"))
+texto_inicio1.pack(padx=10 , pady=10)
+
+texto_inicio2= customtkinter.CTkLabel(janela_principal, text= "Coloque seu nome",
+font=("underline", 16))
+texto_inicio2.pack(padx=10 , pady=10)
+
+nome= customtkinter.CTkEntry (janela_principal, placeholder_text="informe seu nome")
+nome.pack(padx= 15, pady= 15)
+
+botao_continuar= customtkinter.CTkButton (janela_principal, text="continuar", command=janela2_entrega)
+botao_continuar.pack(padx= 10, pady=10)
+
+botao_cadastrar= customtkinter.CTkButton (janela_principal, text= "cadastrar", command= janela3_cadastro)
+botao_cadastrar.pack(padx= 10, pady=10)
+
+janela_principal.mainloop()
