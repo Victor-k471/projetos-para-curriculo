@@ -24,7 +24,6 @@ OBS: fazer a parte de cadastro do morador ou pessoa que trabalha no prédio
 fazer a opção de retirada do produto 
 deixar o nome e clicar em finalizar '''
 
-
 import json
 import os
 
@@ -124,6 +123,7 @@ if os.path.exists(arquivo_destinatario):
 else:
     print("Não encontrei o cadastro desse residente.")
     print("Verifique se o nome está correto ou peça para o morador se cadastrar.")
+    
 
 #4 o que ser aentregue 
 gaveta = input('o que sera entregue? envelope / pacote ou alimento ? : ')
@@ -157,6 +157,6 @@ else:
     
 print('logo sera enviado uma msg via sms ou e-mail informando que foi entregue o pedido')
 
-#atualizado 28/04/25
+
 
 
